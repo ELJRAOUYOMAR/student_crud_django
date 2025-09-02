@@ -20,12 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7z5zzy%&j+fty9ef9ymcj)wj-!cd@4plm&9d^u9p*gx)43r6ev'
+# SECRET_KEY = 'django-insecure-7z5zzy%&j+fty9ef9ymcj)wj-!cd@4plm&9d^u9p*gx)43r6ev'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-7z5zzy%&j+fty9ef9ymcj)wj-!cd@4plm&9d^u9p*gx)43r6ev')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [*]
 
 
 # Application definition
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -129,3 +132,6 @@ STATIC_URL = 'media/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+web: gunicorn myproject.wsgi --bind 0.0.0.0:$PORT
