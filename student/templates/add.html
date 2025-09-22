@@ -15,9 +15,16 @@
                         <i class="fa-solid fa-address-card fa-lg">student registration</i>
                     </div>
                     <div class="card-body">
-                        <form action="{%url 'add'%}" method="POST">
+                        <form action="{%url 'add'%}" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{form.as_p}}
+                            <!-- for debug -->
+                            {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>Form Errors:</strong>
+                                    {{ form.errors }}
+                                </div>
+                                {% endif %}
                             <button type="submit" class="btn btn-primary">Add</button>
                             <a href="{%url 'index'%}" class="btn btn-secondary">cancel</a>
                         </form>

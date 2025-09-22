@@ -14,40 +14,29 @@ def view_student(request,id):
     return HttpResponseRedirect(reverse('index'))
 
 def add(request):
-    if request.method=='POST':
-        form=StudentForm(request.POST , request.FILES)
+    if request.method == 'POST':
+        form = StudentForm(request.POST, request.FILES)  # This line was correct
         if form.is_valid():
-            new_number=form.cleaned_data["number"]
-            new_first_name=form.cleaned_data["first_name"]
-            new_last_name=form.cleaned_data["last_name"]
-            new_email=form.cleaned_data["email"]
-            new_note=form.cleaned_data["note"]
-            new_photo=form.cleaned_data["photo"]
-            
-            new_student=Student(
-                number=new_number,
-                first_name=new_first_name,
-                last_name=new_last_name,
-                email=new_email,
-                note=new_note,
-                photo=new_photo
-            )
-                
-            new_student.save()
-            return render(request,"add.html",{'form':StudentForm(),'success':True})
+            # Instead of manually creating the student, just save the form
+            form.save()  # This handles the file upload properly
+            return render(request, "add.html", {'form': StudentForm(), 'success': True})
+        else:
+            # If form is not valid, show errors
+            return render(request, 'add.html', {'form': form})
     else:
-        form=StudentForm()
-    return render(request,'add.html',{'form':StudentForm()})
+        form = StudentForm()
+    return render(request, 'add.html', {'form': form})
 
 def edit(request,id):
+    student=Student.objects.get(pk=id)
     if request.method=='POST':
-        student=Student.objects.get(pk=id)
-        form=StudentForm(request.POST,instance=student)
+        form=StudentForm(request.POST, request.FILES, instance=student)
         if form.is_valid():
             form.save()
             return render(request,'edit.html',{'form':form,'success':True})
+        else:
+            return render(request, 'edit.html', {'form': form})
     else:
-        student=Student.objects.get(pk=id)
         form=StudentForm(instance=student)
     return render(request,'edit.html',{'form':form})
 

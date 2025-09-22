@@ -38,7 +38,7 @@ class StudentForm(forms.ModelForm):
             self.fields['photo'].widget.attrs.update({
                 'name' : '',
                 'class' : "form-control" ,
-                'type' : "image"
+                'type' : "file"
                 
             })
     class Meta:

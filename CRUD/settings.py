@@ -71,6 +71,22 @@ TEMPLATES = [
     },
 ]
 
+# for GitHub Codespaces CSRF fix
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.githubpreview.dev',
+    'https://*.preview.app.github.dev',
+    'https://*.app.github.dev',
+    'https://localhost:8000',
+    'http://localhost:8000',
+]
+
+# to be safe
+CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SAMESITE = 'Lax'
+
+
+
+
 WSGI_APPLICATION = 'CRUD.wsgi.application'
 
 
@@ -119,16 +135,34 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_ROOT=os.path.join(BASE_DIR,'static')
-STATIC_URL = 'static/'
-STATICFILES_DIRS =[
-    os.path.join(BASE_DIR,'student/static')
+# STATIC_ROOT=os.path.join(BASE_DIR,'static')
+# STATIC_URL = 'static/'
+# STATICFILES_DIRS =[
+#     os.path.join(BASE_DIR,'student/static')
+# ]
+
+# # Media files (uploads)
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# # Default primary key field type
+# # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
+
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# DEBUG = True
+
+# Static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'student/static')
 ]
 
-STATIC_ROOT=os.path.join(BASE_DIR,'media')
-STATIC_URL = 'media/'
+# Media files - ADD THESE LINES
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Force DEBUG = True for development
+DEBUG = True
