@@ -51,8 +51,8 @@
                             </div>
                             <div class="modal-body">
                               {% if student.photo %}
-                              <p><strong>Debug - Image URL:</strong> {{ student.photo.url }}</p>
-                              <p><strong>Debug - Image Name:</strong> {{ student.photo.name }}</p>
+<!--                              <p><strong>Debug - Image URL:</strong> {{ student.photo.url }}</p>-->
+<!--                              <p><strong>Debug - Image Name:</strong> {{ student.photo.name }}</p>-->
                               <img src="{{student.photo.url}}" style="width:300px;height:300px;margin-bottom:10px;"  class="rounded mx-auto d-block" alt="...">
                               {%endif%}
                               <ul class="list-unstyled">
@@ -126,4 +126,3 @@
   </div>
 </div>
 {% endblock body %}
-  
